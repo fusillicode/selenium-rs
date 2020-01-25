@@ -65,6 +65,7 @@ impl ExecuteScriptRequest {
 /// our client.
 pub struct WebDriver {
     browser: String,
+    browser_options: Vec<String>,
     client: reqwest::Client,
     session_id: Option<String>,
 }
@@ -78,6 +79,7 @@ impl WebDriver {
         let browser = get_browser_string(browser);
         WebDriver {
             browser,
+            browser_options: vec!["TODO".to_string()],
             client: reqwest::Client::new(),
             session_id: None,
         }

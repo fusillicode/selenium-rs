@@ -8,6 +8,8 @@ fn test_intialization() {
     assert!(driver.start_session().is_ok());
 }
 
+// s
+
 #[test]
 fn test_navigation() {
     let mut driver = WebDriver::new(Browser::Chrome);
