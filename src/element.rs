@@ -1,13 +1,13 @@
-/*! 
+/*!
 
     Element enables most of the site interaction, and wraps user interactions such as typing text and clicking
     on things. Note that each element is tied to the specific session (currently, we
     can't hold on to the same element across sessions).
 
 
-    # Example - Inspecting attributes of an element 
+    # Example - Inspecting attributes of an element
 
-    ```rust 
+    ```rust
         use selenium_rs::webdriver::{Selector, Browser, WebDriver};
         use selenium_rs::element::Element;
 

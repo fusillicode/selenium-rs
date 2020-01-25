@@ -57,7 +57,7 @@ fn test_get_title() {
 fn test_forward_back() {
     let mut driver = WebDriver::new(Browser::Chrome);
     driver.start_session().unwrap();
-    
+
     driver.navigate("http://google.com").unwrap();
     let google_title = driver.get_title().unwrap();
 
