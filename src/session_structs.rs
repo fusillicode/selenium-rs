@@ -1,39 +1,30 @@
 // Session Request Object
 #[derive(Serialize, Deserialize)]
-pub struct NewSessionRequest<T> {
+pub struct NewSessionRequest {
     #[serde(rename = "desiredCapabilities")]
-    desired_capabilities: T,
-}
-
-#[derive(Serialize, Deserialize)]
-enum DesiredCapabilitiesRequest {
-    ChromeDesiredCapabilitiesRequest,
-    FirefoxDesiredCapabilitiesRequest
+    desired_capabilities: DesiredCapabilitiesRequest,
 }
 
 #[derive(Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-struct ChromeDesiredCapabilitiesRequest {
+struct DesiredCapabilitiesRequest {
     browser_name: String,
     chrome_options: Vec<String>,
 }
 
-#[derive(Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-struct FirefoxDesiredCapabilitiesRequest {
-    browser_name: String,
-    firefox_options: Vec<String>,
-}
-
-impl NewSessionRequest<DesiredCapabilitiesRequest> {
-    pub fn new(browser_name: &str) -> NewSessionRequest<DesiredCapabilitiesRequest> {
-        match &*browser_name {
-            "chrome" => NewSessionRequest::<ChromeDesiredCapabilitiesRequest as DesiredCapabilitiesRequest> { desired_capabilities: ChromeDesiredCapabilitiesRequest { browser_name: browser_name.to_string(), chrome_options: vec!["TODO".to_string()] }},
-            "firefox" => NewSessionRequest::<FirefoxDesiredCapabilitiesRequest as DesiredCapabilitiesRequest> { desired_capabilities: FirefoxDesiredCapabilitiesRequest { browser_name: browser_name.to_string(), firefox_options: vec!["TODO".to_string()] }}
+impl NewSessionRequest {
+    pub fn new(browser_name: &str, browser_options: &Vec<String>) -> NewSessionRequest {
+        NewSessionRequest {
+            desired_capabilities: DesiredCapabilitiesRequest::create(browser_name.to_string(), browser_options.to_vec())
         }
     }
 }
 
+impl DesiredCapabilitiesRequest {
+    pub fn create(browser_name: String, browser_options: Vec<String>) -> DesiredCapabilitiesRequest {
+        DesiredCapabilitiesRequest { browser_name, chrome_options: browser_options }
+    }
+}
 
 // Session Response object
 #[derive(Serialize, Deserialize)]

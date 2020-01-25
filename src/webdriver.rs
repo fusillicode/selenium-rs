@@ -75,11 +75,11 @@ impl WebDriver {
     /// Constructs a new Webdriver with the specific browser.
     /// TODO: Make sure and add testing to verify that it supports
     /// firefox properly
-    pub fn new(browser: Browser) -> WebDriver {
+    pub fn new(browser: Browser, browser_options: Option<Vec<String>>) -> WebDriver {
         let browser = get_browser_string(browser);
         WebDriver {
             browser,
-            browser_options: vec!["TODO".to_string()],
+            browser_options: browser_options.unwrap_or_default(),
             client: reqwest::Client::new(),
             session_id: None,
         }
@@ -92,7 +92,7 @@ impl WebDriver {
     /// collecting the session ID on success, and returning an error
     /// on failure
     pub fn start_session(&mut self) -> reqwest::Result<()> {
-        let body = NewSessionRequest::new(&self.browser);
+        let body = NewSessionRequest::new(&self.browser, &self.browser_options);
         let url = construct_url(vec!["session/"]);
 
         let response: NewSessionResponse = self.client
